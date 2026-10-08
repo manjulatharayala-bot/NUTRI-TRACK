@@ -4,227 +4,550 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>NutriTrack</title>
+<title>NutriTrack AI</title>
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    font-family:Arial,sans-serif;
+:root{
+  --green:#15803d;
+  --green2:#22c55e;
+  --light:#f0fdf4;
+  --dark:#12372a;
+  --text:#26332d;
+  --muted:#66736c;
+  --card:#ffffff;
+  --border:#e4ebe7;
+  --red:#dc2626;
+  --yellow:#eab308;
 }
+
+*{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
 
 body{
-    background:#f4f7f5;
-    color:#222;
+  margin:0;
+  font-family:Inter,Arial,sans-serif;
+  background:#f7faf8;
+  color:var(--text);
 }
 
-header{
-    background:#167c5a;
-    color:white;
-    padding:18px;
-    text-align:center;
+button,input,select{
+  font:inherit;
 }
 
-header h1{
-    font-size:28px;
+button{
+  cursor:pointer;
 }
 
-header p{
-    margin-top:5px;
-    font-size:14px;
+.header{
+  background:linear-gradient(135deg,#14532d,#16a34a);
+  color:white;
+  padding:20px;
+  position:sticky;
+  top:0;
+  z-index:100;
+  box-shadow:0 3px 15px #0002;
 }
 
-nav{
-    display:flex;
-    justify-content:space-around;
-    background:white;
-    padding:10px;
-    position:sticky;
-    top:0;
-    z-index:10;
-    box-shadow:0 2px 8px #ccc;
+.header-inner{
+  max-width:1100px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-nav button{
-    border:none;
-    background:none;
-    font-size:14px;
-    padding:8px;
-    color:#167c5a;
-    font-weight:bold;
+.logo{
+  font-size:24px;
+  font-weight:800;
+}
+
+.logo span{
+  color:#bbf7d0;
+}
+
+.topnav{
+  display:flex;
+  gap:8px;
+}
+
+.topnav button{
+  background:#ffffff20;
+  border:1px solid #ffffff35;
+  color:white;
+  padding:9px 13px;
+  border-radius:10px;
+}
+
+.topnav button:hover{
+  background:#ffffff35;
+}
+
+main{
+  max-width:1100px;
+  margin:auto;
+  padding:25px 18px 90px;
 }
 
 .page{
-    display:none;
-    padding:18px;
-    max-width:900px;
-    margin:auto;
+  display:none;
 }
 
 .page.active{
-    display:block;
+  display:block;
+}
+
+.hero{
+  background:linear-gradient(135deg,#dcfce7,#f0fdf4);
+  padding:35px;
+  border-radius:25px;
+  margin-bottom:20px;
+}
+
+.hero h1{
+  font-size:40px;
+  margin:0 0 10px;
+  color:#14532d;
+}
+
+.hero p{
+  font-size:17px;
+  color:var(--muted);
+}
+
+.search-box{
+  display:flex;
+  gap:10px;
+  margin-top:20px;
+}
+
+.search-box input{
+  flex:1;
+  padding:15px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  outline:none;
+  background:white;
+}
+
+.btn{
+  border:none;
+  padding:12px 17px;
+  border-radius:12px;
+  background:var(--green);
+  color:white;
+  font-weight:700;
+}
+
+.btn:hover{
+  background:#166534;
+}
+
+.btn.secondary{
+  background:#dcfce7;
+  color:#166534;
+}
+
+.btn.danger{
+  background:#fee2e2;
+  color:#991b1b;
 }
 
 .card{
-    background:white;
-    padding:18px;
-    margin:12px 0;
-    border-radius:15px;
-    box-shadow:0 2px 8px #ddd;
-}
-
-.big-number{
-    font-size:28px;
-    font-weight:bold;
-    color:#167c5a;
-    margin-top:8px;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:20px;
+  margin:15px 0;
+  box-shadow:0 3px 12px #00000008;
 }
 
 .grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+}
+
+.grid3{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+}
+
+.grid4{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
 }
 
 .stat{
-    text-align:center;
-    padding:15px;
-    background:white;
-    border-radius:15px;
-    box-shadow:0 2px 7px #ddd;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:18px;
+  text-align:center;
 }
 
-.meal-buttons{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:10px;
-    margin:15px 0;
-}
-
-.meal-buttons button{
-    padding:13px;
-    border:none;
-    border-radius:10px;
-    background:#dff4eb;
-    color:#167c5a;
-    font-weight:bold;
-}
-
-.meal-buttons button.selected{
-    background:#167c5a;
-    color:white;
-}
-
-input,select{
-    width:100%;
-    padding:12px;
-    border:1px solid #ccc;
-    border-radius:10px;
-    margin:8px 0;
+.stat .number{
+  font-size:25px;
+  font-weight:800;
+  color:var(--green);
+  margin-top:7px;
 }
 
 .food-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
 }
 
-.food{
-    background:white;
-    border-radius:14px;
-    overflow:hidden;
-    box-shadow:0 2px 7px #ddd;
+.food-card{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 3px 12px #0000000a;
 }
 
-.food img{
-    width:100%;
-    height:130px;
-    object-fit:cover;
+.food-card img{
+  width:100%;
+  height:175px;
+  object-fit:cover;
+  display:block;
 }
 
-.food-content{
-    padding:10px;
+.food-info{
+  padding:15px;
 }
 
-.food h3{
-    font-size:16px;
+.food-info h3{
+  margin:0 0 7px;
 }
 
-.food p{
-    font-size:13px;
-    margin:5px 0;
+.food-info p{
+  color:var(--muted);
+  font-size:14px;
 }
 
-.food button,
-.main-button{
-    width:100%;
-    padding:10px;
-    border:none;
-    border-radius:8px;
-    background:#167c5a;
-    color:white;
-    font-weight:bold;
-    margin-top:7px;
+.food-actions{
+  display:flex;
+  gap:7px;
+  margin-top:10px;
 }
 
-.remove{
-    background:#d9534f !important;
+.food-actions button{
+  flex:1;
 }
 
-.day-buttons{
-    display:flex;
-    gap:8px;
-    overflow-x:auto;
-    padding:8px 0;
+.tag{
+  display:inline-block;
+  background:#dcfce7;
+  color:#166534;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:bold;
 }
 
-.day-buttons button{
-    min-width:65px;
-    padding:10px;
-    border:none;
-    border-radius:10px;
-    background:#e1e1e1;
+.upload{
+  border:2px dashed #86efac;
+  border-radius:18px;
+  padding:25px;
+  text-align:center;
+  background:#f0fdf4;
+  margin-top:15px;
 }
 
-.day-buttons button.selected{
-    background:#167c5a;
-    color:white;
+.upload input{
+  margin-top:10px;
 }
 
-.progress-day{
-    display:flex;
-    justify-content:space-between;
-    padding:12px;
-    margin:7px 0;
-    background:white;
-    border-radius:10px;
-    box-shadow:0 1px 5px #ddd;
+.preview{
+  max-width:250px;
+  max-height:200px;
+  border-radius:15px;
+  margin:15px auto;
+  display:block;
 }
 
-.disclaimer{
-    background:#fff3cd;
-    padding:12px;
-    border-radius:10px;
-    margin-top:15px;
-    font-size:13px;
+.nutrition-table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+.nutrition-table td{
+  padding:10px;
+  border-bottom:1px solid var(--border);
+}
+
+.nutrition-table td:last-child{
+  text-align:right;
+  font-weight:bold;
+}
+
+.section-title{
+  margin-top:28px;
+  color:#14532d;
+}
+
+.good{
+  background:#dcfce7;
+  color:#166534;
+}
+
+.moderate{
+  background:#fef9c3;
+  color:#854d0e;
+}
+
+.low{
+  background:#f3f4f6;
+  color:#4b5563;
+}
+
+.source-badge{
+  display:inline-block;
+  padding:8px 12px;
+  border-radius:20px;
+  font-weight:bold;
+  margin-top:10px;
+}
+
+.benefit{
+  padding:12px;
+  background:#f8faf9;
+  border-radius:12px;
+  margin:8px 0;
+}
+
+.meal-row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+  padding:12px;
+  border-bottom:1px solid var(--border);
+}
+
+.meal-row:last-child{
+  border-bottom:none;
+}
+
+.day-tabs{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:5px 0 12px;
+}
+
+.day-tabs button{
+  min-width:65px;
+  padding:9px;
+  border:none;
+  border-radius:10px;
+  background:#e5e7eb;
+}
+
+.day-tabs button.active{
+  background:var(--green);
+  color:white;
+}
+
+.chart{
+  display:flex;
+  align-items:flex-end;
+  gap:8px;
+  height:230px;
+  padding:15px;
+  overflow-x:auto;
+  border:1px solid var(--border);
+  border-radius:15px;
+  background:#f8faf9;
+}
+
+.bar-wrap{
+  min-width:42px;
+  height:190px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  align-items:center;
+}
+
+.bar{
+  width:28px;
+  min-height:3px;
+  background:linear-gradient(#22c55e,#15803d);
+  border-radius:8px 8px 2px 2px;
+}
+
+.bar-label{
+  font-size:10px;
+  margin-top:5px;
+}
+
+select{
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:white;
+}
+
+.form input,
+.form select{
+  width:100%;
+  margin:7px 0 14px;
+}
+
+.form label{
+  font-weight:bold;
 }
 
 .empty{
-    text-align:center;
-    padding:20px;
-    color:#777;
+  text-align:center;
+  color:var(--muted);
+  padding:25px;
+}
+
+.disclaimer{
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  color:#7c2d12;
+  padding:15px;
+  border-radius:15px;
+  margin-top:20px;
+  font-size:13px;
+}
+
+.bottom-nav{
+  display:none;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:#0008;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:500;
+  padding:15px;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  background:white;
+  border-radius:22px;
+  padding:22px;
+  max-width:500px;
+  width:100%;
+  max-height:90vh;
+  overflow:auto;
+}
+
+.close{
+  float:right;
+  border:none;
+  background:#eee;
+  border-radius:50%;
+  width:32px;
+  height:32px;
+}
+
+@media(max-width:800px){
+  .food-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .grid4{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .grid3{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .hero h1{
+    font-size:30px;
+  }
 }
 
 @media(max-width:600px){
-    .food-grid{
-        grid-template-columns:1fr 1fr;
-    }
+  .header{
+    padding:15px;
+  }
 
-    .grid{
-        grid-template-columns:1fr 1fr;
-    }
+  .topnav{
+    display:none;
+  }
+
+  main{
+    padding:15px 12px 80px;
+  }
+
+  .hero{
+    padding:22px;
+  }
+
+  .search-box{
+    flex-direction:column;
+  }
+
+  .food-grid{
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+
+  .food-card img{
+    height:120px;
+  }
+
+  .food-info{
+    padding:10px;
+  }
+
+  .grid,
+  .grid3,
+  .grid4{
+    grid-template-columns:1fr 1fr;
+    gap:9px;
+  }
+
+  .bottom-nav{
+    display:flex;
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    background:white;
+    border-top:1px solid var(--border);
+    z-index:200;
+    justify-content:space-around;
+    padding:8px 3px;
+  }
+
+  .bottom-nav button{
+    border:none;
+    background:none;
+    color:#64748b;
+    font-size:11px;
+  }
+
+  .bottom-nav button.active{
+    color:var(--green);
+    font-weight:bold;
+  }
+
+  .stat{
+    padding:12px 7px;
+  }
+
+  .stat .number{
+    font-size:19px;
+  }
 }
 </style>
 </head>
@@ -232,912 +555,3413 @@ input,select{
 <body>
 
 <header>
-    <h1>🥗 NutriTrack</h1>
-    <p>Track your meals. Understand your nutrition.</p>
+  <div class="header-inner">
+    <div class="logo">🥗 NutriTrack <span>AI</span></div>
+
+    <div class="topnav">
+      <button onclick="go('home')">Home</button>
+      <button onclick="go('analyze')">Analyze</button>
+      <button onclick="go('tracker')">Tracker</button>
+      <button onclick="go('journey')">14-Day</button>
+      <button onclick="go('database')">Database</button>
+    </div>
+  </div>
 </header>
 
-<nav>
-    <button onclick="showPage('home')">🏠 Home</button>
-    <button onclick="showPage('meals')">🍽 Meals</button>
-    <button onclick="showPage('progress')">📊 Progress</button>
-    <button onclick="showPage('profile')">👤 Profile</button>
-</nav>
-
+<main>
 
 <!-- HOME -->
+
 <section id="home" class="page active">
 
-    <div class="card">
-        <h2>Welcome to NutriTrack</h2>
-        <p id="welcomeText">Track your food for 14 days.</p>
+  <div class="hero">
+    <h1>Know What's Inside Your Food</h1>
+
+    <p>
+      Tell us what you eat, and we'll show you what's inside it.
+    </p>
+
+    <div class="search-box">
+      <input
+        id="homeSearch"
+        placeholder="Search food... e.g. egg, rice, spinach"
+        oninput="homeSearch()"
+      >
+
+      <button class="btn" onclick="go('analyze')">
+        Analyze Food
+      </button>
     </div>
 
-    <div class="card">
-        <h3>14-Day Tracker</h3>
-        <div class="big-number" id="dayText">Day 1 of 14</div>
-        <p id="dateText"></p>
+    <div id="homeSuggestions"></div>
+  </div>
+
+  <div class="grid4">
+
+    <div class="stat">
+      <div>🔥</div>
+      <b>Calories</b>
+      <div class="number" id="homeCalories">0</div>
     </div>
 
-    <div class="grid">
+    <div class="stat">
+      <div>💪</div>
+      <b>Protein</b>
+      <div class="number" id="homeProtein">0 g</div>
+    </div>
 
-        <div class="stat">
-            <h3>🩸 Iron</h3>
-            <div class="big-number" id="homeIron">0 mg</div>
-        </div>
+    <div class="stat">
+      <div>🩸</div>
+      <b>Iron</b>
+      <div class="number" id="homeIron">0 mg</div>
+    </div>
 
-        <div class="stat">
-            <h3>⚡ Magnesium</h3>
-            <div class="big-number" id="homeMag">0 mg</div>
-        </div>
+    <div class="stat">
+      <div>🍊</div>
+      <b>Vitamin C</b>
+      <div class="number" id="homeVitaminC">0 mg</div>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <h2>Today's Nutrition</h2>
+    <p id="homeTodayText">No foods added today.</p>
+
+    <button class="btn" onclick="go('tracker')">
+      View Daily Tracker
+    </button>
+  </div>
+
+  <div class="card">
+
+    <h2>📅 14-Day Nutrition Journey</h2>
+
+    <div class="grid3">
+
+      <div class="stat">
+        <b>Days Tracked</b>
+        <div class="number" id="homeDays">0 / 14</div>
+      </div>
+
+      <div class="stat">
+        <b>14-Day Iron</b>
+        <div class="number" id="home14Iron">0 mg</div>
+      </div>
+
+      <div class="stat">
+        <b>14-Day Protein</b>
+        <div class="number" id="home14Protein">0 g</div>
+      </div>
 
     </div>
 
-    <div class="card">
-        <h3>Today's Meals</h3>
-        <p id="mealCount">0 foods added today</p>
-    </div>
+    <br>
 
-    <button class="main-button" onclick="showPage('meals')">
-        + Add Food
+    <button class="btn" onclick="go('journey')">
+      Open 14-Day Journey
     </button>
 
-    <div class="disclaimer">
-        <b>Important:</b> NutriTrack estimates dietary iron and magnesium
-        intake from the foods you enter. It does not measure or predict
-        blood iron, hemoglobin or ferritin levels. Actual health status
-        requires appropriate medical testing.
-    </div>
+  </div>
+
+  <div class="disclaimer">
+    <b>Important:</b>
+    This app provides general nutritional and educational information.
+    It does not diagnose medical conditions or replace advice from a
+    qualified healthcare professional. Nutrients can support normal
+    blood and hemoglobin formation but do not guarantee a specific
+    change in hemoglobin.
+  </div>
 
 </section>
 
 
-<!-- MEALS -->
-<section id="meals" class="page">
+<!-- ANALYZER -->
 
-    <h2>🍽 Meals</h2>
+<section id="analyze" class="page">
 
-    <div class="card">
+  <h1>🍽 Food Analyzer</h1>
 
-        <h3>Select Day</h3>
+  <div class="card">
 
-        <div class="day-buttons" id="mealDays"></div>
+    <h2>Search Your Food</h2>
 
-        <h3 style="margin-top:15px;">Select Meal</h3>
+    <input
+      id="foodSearch"
+      style="width:100%;padding:14px;border:1px solid var(--border);border-radius:12px"
+      placeholder="Search eggs, rice, dal, ragi..."
+      oninput="renderSearchResults()"
+    >
 
-        <div class="meal-buttons">
+    <div id="searchResults" class="food-grid" style="margin-top:15px"></div>
 
-            <button id="mealBreakfast"
-            onclick="selectMeal('Breakfast')">
-                🌅 Breakfast
-            </button>
+  </div>
 
-            <button id="mealLunch"
-            onclick="selectMeal('Lunch')">
-                🍛 Lunch
-            </button>
+  <div class="upload">
 
-            <button id="mealSnacks"
-            onclick="selectMeal('Snacks')">
-                🍎 Snacks
-            </button>
+    <h2>📷 Upload Food Photo</h2>
 
-            <button id="mealDinner"
-            onclick="selectMeal('Dinner')">
-                🌙 Dinner
-            </button>
+    <p>
+      Prototype AI identification — upload a food image.
+    </p>
 
-        </div>
+    <input
+      type="file"
+      accept="image/*"
+      onchange="identifyPhoto(event)"
+    >
 
-        <input
-            type="text"
-            id="search"
-            placeholder="🔍 Search food..."
-            oninput="showFoods()"
-        >
+    <img id="photoPreview" class="preview" style="display:none">
 
-    </div>
+    <p id="photoResult"></p>
 
-    <div id="foodGrid" class="food-grid"></div>
+  </div>
+
+  <div id="selectedFoodArea"></div>
 
 </section>
 
 
-<!-- PROGRESS -->
-<section id="progress" class="page">
+<!-- TRACKER -->
 
-    <h2>📊 14-Day Progress</h2>
+<section id="tracker" class="page">
 
-    <div class="card">
+  <h1>📋 Daily Nutrition</h1>
 
-        <h3>14-Day Total Iron</h3>
-        <div class="big-number" id="totalIron">0 mg</div>
+  <div class="card">
 
-        <p>
-            Total dietary iron recorded from Day 1 to Day 14.
-        </p>
+    <h3>Select Date</h3>
 
+    <input
+      type="date"
+      id="trackerDate"
+      onchange="changeDate(this.value)"
+      style="padding:12px;border:1px solid var(--border);border-radius:10px"
+    >
+
+  </div>
+
+  <div class="grid4">
+
+    <div class="stat">
+      🔥
+      <b>Calories</b>
+      <div class="number" id="dailyCalories">0</div>
     </div>
 
-    <div class="card">
-
-        <h3>14-Day Total Magnesium</h3>
-        <div class="big-number" id="totalMag">0 mg</div>
-
-        <p>
-            Total dietary magnesium recorded from Day 1 to Day 14.
-        </p>
-
+    <div class="stat">
+      💪
+      <b>Protein</b>
+      <div class="number" id="dailyProtein">0 g</div>
     </div>
 
-    <div class="grid">
-
-        <div class="stat">
-            <h3>Average Iron</h3>
-            <div class="big-number" id="averageIron">0 mg</div>
-            <p>per day</p>
-        </div>
-
-        <div class="stat">
-            <h3>Average Magnesium</h3>
-            <div class="big-number" id="averageMag">0 mg</div>
-            <p>per day</p>
-        </div>
-
+    <div class="stat">
+      🩸
+      <b>Iron</b>
+      <div class="number" id="dailyIron">0 mg</div>
     </div>
 
-    <div class="card">
-
-        <h3>Day-by-Day Intake</h3>
-
-        <div id="dailyBreakdown"></div>
-
+    <div class="stat">
+      🦴
+      <b>Calcium</b>
+      <div class="number" id="dailyCalcium">0 mg</div>
     </div>
+
+  </div>
+
+  <div class="card">
+
+    <h2>Today's Foods</h2>
+
+    <div id="dailyFoods"></div>
+
+  </div>
+
+  <div class="card">
+
+    <h2>Daily Nutrition Details</h2>
+
+    <div id="dailyNutrition"></div>
+
+  </div>
+
+  <button class="btn" onclick="go('analyze')">
+    + Add Food
+  </button>
 
 </section>
 
 
-<!-- PROFILE -->
-<section id="profile" class="page">
+<!-- 14 DAY -->
 
-    <h2>👤 Profile</h2>
+<section id="journey" class="page">
 
-    <div class="card">
+  <h1>📅 14-Day Nutrition Journey</h1>
 
-        <label>Name</label>
-        <input type="text" id="profileName"
-        placeholder="Enter your name">
+  <div class="card">
 
-        <label>Age</label>
-        <input type="number" id="profileAge"
-        placeholder="Enter your age">
+    <div class="day-tabs" id="dayTabs"></div>
 
-        <label>Food Preference</label>
+    <h2 id="journeyDayTitle">Day 1</h2>
 
-        <select id="profileFood">
-            <option>Vegetarian</option>
-            <option>Non-Vegetarian</option>
-            <option>Eggetarian</option>
-        </select>
+    <div id="journeyFoods"></div>
 
-        <button class="main-button" onclick="saveProfile()">
-            Save Profile
-        </button>
+  </div>
 
-        <p id="profileSaved"
-        style="margin-top:10px;color:#167c5a;"></p>
+  <div class="grid4">
 
+    <div class="stat">
+      🔥
+      <b>14-Day Calories</b>
+      <div class="number" id="totalCalories">0</div>
     </div>
 
+    <div class="stat">
+      💪
+      <b>14-Day Protein</b>
+      <div class="number" id="totalProtein">0 g</div>
+    </div>
+
+    <div class="stat">
+      🩸
+      <b>14-Day Iron</b>
+      <div class="number" id="totalIron">0 mg</div>
+    </div>
+
+    <div class="stat">
+      🍊
+      <b>14-Day Vitamin C</b>
+      <div class="number" id="totalVitaminC">0 mg</div>
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <h2>14-Day Summary</h2>
+
+    <table class="nutrition-table">
+
+      <thead>
+        <tr>
+          <th style="text-align:left">Nutrient</th>
+          <th>14-Day Total</th>
+          <th>Daily Average</th>
+        </tr>
+      </thead>
+
+      <tbody id="summaryTable"></tbody>
+
+    </table>
+
+  </div>
+
+  <div class="card">
+
+    <h2>📈 Nutrition Trends</h2>
+
+    <select id="chartSelect" onchange="renderChart()">
+
+      <option value="calories">Calories</option>
+      <option value="protein">Protein</option>
+      <option value="iron">Iron</option>
+      <option value="b12">Vitamin B12</option>
+      <option value="folate">Folate</option>
+      <option value="vitaminC">Vitamin C</option>
+
+    </select>
+
+    <div id="chart" class="chart" style="margin-top:15px"></div>
+
+  </div>
+
+  <div class="card">
+
+    <h2>🩸 14-Day Blood Support</h2>
+
+    <p>
+      These nutrients contribute to normal blood and red blood cell
+      formation and normal body functions.
+    </p>
+
+    <div id="bloodSupport14"></div>
+
+  </div>
+
 </section>
+
+
+<!-- DATABASE -->
+
+<section id="database" class="page">
+
+  <h1>🥗 Food Database</h1>
+
+  <input
+    id="databaseSearch"
+    style="width:100%;padding:14px;border:1px solid var(--border);border-radius:12px;margin:15px 0"
+    placeholder="Search 30+ foods..."
+    oninput="renderDatabase()"
+  >
+
+  <div id="databaseGrid" class="food-grid"></div>
+
+</section>
+
+
+<!-- FAVORITES -->
+
+<section id="favorites" class="page">
+
+  <h1>⭐ Favorites</h1>
+
+  <div id="favoriteGrid" class="food-grid"></div>
+
+</section>
+
+
+<!-- ABOUT -->
+
+<section id="about" class="page">
+
+  <div class="hero">
+
+    <h1>About NutriTrack AI</h1>
+
+    <p>
+      NutriTrack AI is a college-project nutrition analysis prototype
+      designed to help users understand the nutrients present in foods
+      and track their dietary intake over 14 days.
+    </p>
+
+  </div>
+
+  <div class="card">
+
+    <h2>How It Works</h2>
+
+    <p>
+      Search for a food or upload a food image, select the quantity,
+      view its nutrition information, and add it to your daily tracker.
+    </p>
+
+    <br>
+
+    <p>
+      The prototype uses a local food database. A real AI vision API
+      and backend database can be connected later.
+    </p>
+
+  </div>
+
+  <div class="disclaimer">
+
+    <b>Medical Disclaimer</b><br><br>
+
+    This app provides general nutritional and educational information.
+    It does not diagnose medical conditions or replace advice from a
+    qualified healthcare professional.
+
+    <br><br>
+
+    Nutrients such as iron, folate, vitamin B12, vitamin C, vitamin B6
+    and protein contribute to normal blood and red blood cell functions.
+    The app does not predict hemoglobin levels or guarantee a specific
+    increase in hemoglobin.
+
+  </div>
+
+</section>
+
+</main>
+
+
+<!-- BOTTOM NAVIGATION -->
+
+<div class="bottom-nav">
+
+  <button onclick="go('home')">🏠<br>Home</button>
+
+  <button onclick="go('analyze')">🔎<br>Analyze</button>
+
+  <button onclick="go('tracker')">📋<br>Tracker</button>
+
+  <button onclick="go('journey')">📅<br>14-Day</button>
+
+  <button onclick="go('favorites')">⭐<br>Favorites</button>
+
+</div>
+
+
+<!-- FOOD MODAL -->
+
+<div id="foodModal" class="modal">
+
+  <div class="modal-box">
+
+    <button class="close" onclick="closeModal()">×</button>
+
+    <div id="modalContent"></div>
+
+  </div>
+
+</div>
 
 
 <script>
 
-/* =========================
+/* =========================================================
    FOOD DATABASE
-========================= */
+========================================================= */
 
 const foods = [
 
 {
-    name:"Idli",
-    meal:"Breakfast",
-    iron:1.2,
-    magnesium:20,
-    image:"https://images.unsplash.com/photo-1589301760014-d929f3979dbc"
+id:"egg",
+name:"Egg",
+category:"Protein",
+image:"https://images.unsplash.com/photo-1525351484163-7529414344d8",
+serving:"1 large egg",
+calories:72,
+protein:6.3,
+carbs:0.4,
+fat:4.8,
+satFat:1.6,
+fiber:0,
+sugar:0.2,
+iron:0.9,
+calcium:28,
+potassium:69,
+magnesium:6,
+zinc:0.6,
+sodium:71,
+phosphorus:99,
+cholesterol:186,
+vitA:75,
+b1:0.02,
+b2:0.26,
+b6:0.08,
+b12:0.5,
+vitC:0,
+vitD:1.1,
+vitE:0.5,
+vitK:0.1,
+folate:24
 },
 
 {
-    name:"Dosa",
-    meal:"Breakfast",
-    iron:1.5,
-    magnesium:28,
-    image:"https://images.unsplash.com/photo-1668236543090-82eba5ee5976"
+id:"rice",
+name:"Cooked Rice",
+category:"Grains",
+image:"https://images.unsplash.com/photo-1516684732162-798a0062be99",
+serving:"1 cup",
+calories:205,
+protein:4.3,
+carbs:44.5,
+fat:0.4,
+satFat:0.1,
+fiber:0.6,
+sugar:0.1,
+iron:0.3,
+calcium:16,
+potassium:55,
+magnesium:19,
+zinc:0.8,
+sodium:2,
+phosphorus:68,
+cholesterol:0,
+vitA:0,
+b1:0.04,
+b2:0.03,
+b6:0.09,
+b12:0,
+vitC:0,
+vitD:0,
+vitE:0.1,
+vitK:0,
+folate:4
 },
 
 {
-    name:"Oats",
-    meal:"Breakfast",
-    iron:4.3,
-    magnesium:177,
-    image:"https://images.unsplash.com/photo-1517673400267-0251440c45dc"
+id:"chicken",
+name:"Chicken",
+category:"Protein",
+image:"https://images.unsplash.com/photo-1604503468506-a8da13d82791",
+serving:"100 g",
+calories:165,
+protein:31,
+carbs:0,
+fat:3.6,
+satFat:1,
+fiber:0,
+sugar:0,
+iron:1,
+calcium:15,
+potassium:256,
+magnesium:29,
+zinc:1,
+sodium:74,
+phosphorus:228,
+cholesterol:85,
+vitA:6,
+b1:0.07,
+b2:0.12,
+b6:0.6,
+b12:0.3,
+vitC:0,
+vitD:0.1,
+vitE:0.3,
+vitK:2,
+folate:4
 },
 
 {
-    name:"Poha",
-    meal:"Breakfast",
-    iron:2.5,
-    magnesium:30,
-    image:"https://images.unsplash.com/photo-1601050690597-df0568f70950"
+id:"fish",
+name:"Fish",
+category:"Protein",
+image:"https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2",
+serving:"100 g",
+calories:130,
+protein:22,
+carbs:0,
+fat:4.5,
+satFat:1,
+fiber:0,
+sugar:0,
+iron:0.8,
+calcium:20,
+potassium:300,
+magnesium:30,
+zinc:0.5,
+sodium:60,
+phosphorus:200,
+cholesterol:60,
+vitA:20,
+b1:0.1,
+b2:0.2,
+b6:0.4,
+b12:2,
+vitC:0,
+vitD:5,
+vitE:0.5,
+vitK:0,
+folate:10
 },
 
 {
-    name:"Upma",
-    meal:"Breakfast",
-    iron:1.8,
-    magnesium:35,
-    image:"https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7"
+id:"milk",
+name:"Milk",
+category:"Dairy",
+image:"https://images.unsplash.com/photo-1550583724-b2692b85b150",
+serving:"1 cup",
+calories:122,
+protein:8.1,
+carbs:12,
+fat:4.8,
+satFat:3,
+fiber:0,
+sugar:12,
+iron:0.1,
+calcium:300,
+potassium:366,
+magnesium:24,
+zinc:1,
+sodium:100,
+phosphorus:200,
+cholesterol:20,
+vitA:68,
+b1:0.1,
+b2:0.4,
+b6:0.1,
+b12:1.2,
+vitC:0,
+vitD:2.5,
+vitE:0.1,
+vitK:0.3,
+folate:12
 },
 
 {
-    name:"Rice",
-    meal:"Lunch",
-    iron:2.7,
-    magnesium:19,
-    image:"https://images.unsplash.com/photo-1516684732162-798a0062be99"
+id:"curd",
+name:"Curd / Yogurt",
+category:"Dairy",
+image:"https://images.unsplash.com/photo-1488477181946-6428a0291777",
+serving:"1 cup",
+calories:150,
+protein:8.5,
+carbs:11,
+fat:8,
+satFat:5,
+fiber:0,
+sugar:9,
+iron:0.1,
+calcium:300,
+potassium:380,
+magnesium:30,
+zinc:1,
+sodium:110,
+phosphorus:220,
+cholesterol:30,
+vitA:70,
+b1:0.1,
+b2:0.3,
+b6:0.1,
+b12:1.1,
+vitC:1,
+vitD:0.1,
+vitE:0.1,
+vitK:0.5,
+folate:12
 },
 
 {
-    name:"Dal",
-    meal:"Lunch",
-    iron:3.3,
-    magnesium:36,
-    image:"https://images.unsplash.com/photo-1546833999-b9f581a1996d"
+id:"dal",
+name:"Dal",
+category:"Indian Food",
+image:"https://images.unsplash.com/photo-1546833999-b9f581a1996d",
+serving:"1 cup",
+calories:198,
+protein:12,
+carbs:30,
+fat:4,
+satFat:0.5,
+fiber:9,
+sugar:3,
+iron:3.3,
+calcium:45,
+potassium:480,
+magnesium:70,
+zinc:2,
+sodium:250,
+phosphorus:180,
+cholesterol:0,
+vitA:20,
+b1:0.3,
+b2:0.1,
+b6:0.3,
+b12:0,
+vitC:4,
+vitD:0,
+vitE:0.2,
+vitK:2,
+folate:180
 },
 
 {
-    name:"Rajma",
-    meal:"Lunch",
-    iron:5.1,
-    magnesium:140,
-    image:"https://images.unsplash.com/photo-1547592180-85f173990554"
+id:"chickpeas",
+name:"Chickpeas",
+category:"Legumes",
+image:"https://images.unsplash.com/photo-1515543904379-3d757afe72e4",
+serving:"1 cup",
+calories:269,
+protein:14.5,
+carbs:45,
+fat:4.2,
+satFat:0.4,
+fiber:12.5,
+sugar:8,
+iron:4.7,
+calcium:80,
+potassium:477,
+magnesium:79,
+zinc:2.5,
+sodium:11,
+phosphorus:276,
+cholesterol:0,
+vitA:1,
+b1:0.2,
+b2:0.1,
+b6:0.2,
+b12:0,
+vitC:2,
+vitD:0,
+vitE:0.6,
+vitK:6,
+folate:282
 },
 
 {
-    name:"Chickpeas",
-    meal:"Lunch",
-    iron:4.7,
-    magnesium:115,
-    image:"https://images.unsplash.com/photo-1515543904379-3d757afe72e4"
+id:"rajma",
+name:"Rajma",
+category:"Legumes",
+image:"https://images.unsplash.com/photo-1547592180-85f173990554",
+serving:"1 cup",
+calories:225,
+protein:15,
+carbs:40,
+fat:0.9,
+satFat:0.2,
+fiber:11,
+sugar:0.6,
+iron:5.2,
+calcium:83,
+potassium:713,
+magnesium:74,
+zinc:2.8,
+sodium:2,
+phosphorus:251,
+cholesterol:0,
+vitA:0,
+b1:0.2,
+b2:0.1,
+b6:0.2,
+b12:0,
+vitC:4,
+vitD:0,
+vitE:0.2,
+vitK:14,
+folate:230
 },
 
 {
-    name:"Spinach",
-    meal:"Lunch",
-    iron:2.7,
-    magnesium:79,
-    image:"https://images.unsplash.com/photo-1576045057995-568f588f82fb"
+id:"spinach",
+name:"Spinach",
+category:"Vegetables",
+image:"https://images.unsplash.com/photo-1576045057995-568f588f82fb",
+serving:"1 cup cooked",
+calories:41,
+protein:5.3,
+carbs:6.8,
+fat:0.5,
+satFat:0.1,
+fiber:4,
+sugar:0.8,
+iron:6.4,
+calcium:245,
+potassium:839,
+magnesium:157,
+zinc:1.6,
+sodium:126,
+phosphorus:101,
+cholesterol:0,
+vitA:943,
+b1:0.1,
+b2:0.2,
+b6:0.3,
+b12:0,
+vitC:17,
+vitD:0,
+vitE:3.7,
+vitK:889,
+folate:146
 },
 
 {
-    name:"Banana",
-    meal:"Snacks",
-    iron:0.3,
-    magnesium:32,
-    image:"https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e"
+id:"banana",
+name:"Banana",
+category:"Fruits",
+image:"https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e",
+serving:"1 medium",
+calories:105,
+protein:1.3,
+carbs:27,
+fat:0.4,
+satFat:0.1,
+fiber:3.1,
+sugar:14,
+iron:0.3,
+calcium:6,
+potassium:422,
+magnesium:32,
+zinc:0.2,
+sodium:1,
+phosphorus:26,
+cholesterol:0,
+vitA:4,
+b1:0.04,
+b2:0.09,
+b6:0.43,
+b12:0,
+vitC:10,
+vitD:0,
+vitE:0.1,
+vitK:0.6,
+folate:24
 },
 
 {
-    name:"Apple",
-    meal:"Snacks",
-    iron:0.1,
-    magnesium:5,
-    image:"https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6"
+id:"apple",
+name:"Apple",
+category:"Fruits",
+image:"https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6",
+serving:"1 medium",
+calories:95,
+protein:0.5,
+carbs:25,
+fat:0.3,
+satFat:0.1,
+fiber:4.4,
+sugar:19,
+iron:0.2,
+calcium:11,
+potassium:195,
+magnesium:9,
+zinc:0.1,
+sodium:2,
+phosphorus:20,
+cholesterol:0,
+vitA:6,
+b1:0.03,
+b2:0.05,
+b6:0.08,
+b12:0,
+vitC:8,
+vitD:0,
+vitE:0.3,
+vitK:4,
+folate:5
 },
 
 {
-    name:"Peanuts",
-    meal:"Snacks",
-    iron:1.3,
-    magnesium:49,
-    image:"https://images.unsplash.com/photo-1567892737950-30c7a5a4c8e1"
+id:"orange",
+name:"Orange",
+category:"Fruits",
+image:"https://images.unsplash.com/photo-1547514701-42782101795e",
+serving:"1 medium",
+calories:62,
+protein:1.2,
+carbs:15,
+fat:0.2,
+satFat:0,
+fiber:3.1,
+sugar:12,
+iron:0.1,
+calcium:52,
+potassium:237,
+magnesium:13,
+zinc:0.1,
+sodium:0,
+phosphorus:18,
+cholesterol:0,
+vitA:14,
+b1:0.1,
+b2:0.05,
+b6:0.08,
+b12:0,
+vitC:70,
+vitD:0,
+vitE:0.2,
+vitK:0,
+folate:39
 },
 
 {
-    name:"Almonds",
-    meal:"Snacks",
-    iron:1.1,
-    magnesium:76,
-    image:"https://images.unsplash.com/photo-1508061253366-f7da158b6d46"
+id:"guava",
+name:"Guava",
+category:"Fruits",
+image:"https://images.unsplash.com/photo-1536511132770-e5058c7e8c46",
+serving:"1 medium",
+calories:68,
+protein:2.6,
+carbs:14,
+fat:1,
+satFat:0.3,
+fiber:5.4,
+sugar:9,
+iron:0.3,
+calcium:18,
+potassium:417,
+magnesium:22,
+zinc:0.2,
+sodium:2,
+phosphorus:40,
+cholesterol:0,
+vitA:31,
+b1:0.07,
+b2:0.04,
+b6:0.1,
+b12:0,
+vitC:125,
+vitD:0,
+vitE:1,
+vitK:2,
+folate:49
 },
 
 {
-    name:"Milk",
-    meal:"Snacks",
-    iron:0.1,
-    magnesium:24,
-    image:"https://images.unsplash.com/photo-1550583724-b2692b85b150"
+id:"carrot",
+name:"Carrot",
+category:"Vegetables",
+image:"https://images.unsplash.com/photo-1447175008436-170170753d52",
+serving:"1 cup",
+calories:52,
+protein:1.2,
+carbs:12,
+fat:0.3,
+satFat:0,
+fiber:3.6,
+sugar:6,
+iron:0.4,
+calcium:42,
+potassium:390,
+magnesium:15,
+zinc:0.3,
+sodium:88,
+phosphorus:48,
+cholesterol:0,
+vitA:835,
+b1:0.1,
+b2:0.1,
+b6:0.2,
+b12:0,
+vitC:8,
+vitD:0,
+vitE:0.8,
+vitK:16,
+folate:24
 },
 
 {
-    name:"Chapati",
-    meal:"Dinner",
-    iron:2.5,
-    magnesium:30,
-    image:"https://images.unsplash.com/photo-1601050690597-df0568f70950"
+id:"tomato",
+name:"Tomato",
+category:"Vegetables",
+image:"https://images.unsplash.com/photo-1546094096-0df4bcaaa337",
+serving:"1 medium",
+calories:22,
+protein:1.1,
+carbs:4.8,
+fat:0.2,
+satFat:0,
+fiber:1.5,
+sugar:3.2,
+iron:0.5,
+calcium:12,
+potassium:292,
+magnesium:14,
+zinc:0.2,
+sodium:6,
+phosphorus:29,
+cholesterol:0,
+vitA:75,
+b1:0.04,
+b2:0.02,
+b6:0.08,
+b12:0,
+vitC:17,
+vitD:0,
+vitE:0.5,
+vitK:9,
+folate:18
 },
 
 {
-    name:"Vegetable Curry",
-    meal:"Dinner",
-    iron:2.0,
-    magnesium:45,
-    image:"https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7"
+id:"potato",
+name:"Potato",
+category:"Vegetables",
+image:"https://images.unsplash.com/photo-1518977676601-b53f82aba655",
+serving:"1 medium",
+calories:161,
+protein:4.3,
+carbs:37,
+fat:0.2,
+satFat:0,
+fiber:3.8,
+sugar:2,
+iron:1.9,
+calcium:26,
+potassium:926,
+magnesium:48,
+zinc:0.6,
+sodium:13,
+phosphorus:121,
+cholesterol:0,
+vitA:0,
+b1:0.2,
+b2:0.1,
+b6:0.7,
+b12:0,
+vitC:17,
+vitD:0,
+vitE:0.1,
+vitK:3,
+folate:48
 },
 
 {
-    name:"Paneer",
-    meal:"Dinner",
-    iron:0.2,
-    magnesium:8,
-    image:"https://images.unsplash.com/photo-1631452180519-c014fe946bc7"
+id:"peanuts",
+name:"Peanuts",
+category:"Nuts & Seeds",
+image:"https://images.unsplash.com/photo-1567892737950-30c7a5a4c8e1",
+serving:"30 g",
+calories:170,
+protein:7.7,
+carbs:4.8,
+fat:14.7,
+satFat:2,
+fiber:2.4,
+sugar:1.4,
+iron:1.4,
+calcium:28,
+potassium:200,
+magnesium:50,
+zinc:1,
+sodium:3,
+phosphorus:100,
+cholesterol:0,
+vitA:0,
+b1:0.2,
+b2:0.03,
+b6:0.1,
+b12:0,
+vitC:0,
+vitD:0,
+vitE:2.4,
+vitK:0,
+folate:68
 },
 
 {
-    name:"Egg",
-    meal:"Dinner",
-    iron:1.2,
-    magnesium:12,
-    image:"https://images.unsplash.com/photo-1525351484163-7529414344d8"
+id:"almonds",
+name:"Almonds",
+category:"Nuts & Seeds",
+image:"https://images.unsplash.com/photo-1508061253366-f7da158b6d46",
+serving:"30 g",
+calories:174,
+protein:6.4,
+carbs:6.5,
+fat:15,
+satFat:1.1,
+fiber:3.8,
+sugar:1.3,
+iron:1.1,
+calcium:76,
+potassium:220,
+magnesium:81,
+zinc:0.9,
+sodium:1,
+phosphorus:140,
+cholesterol:0,
+vitA:0,
+b1:0.06,
+b2:0.3,
+b6:0.08,
+b12:0,
+vitC:0,
+vitD:0,
+vitE:7.7,
+vitK:0,
+folate:15
 },
 
 {
-    name:"Chicken",
-    meal:"Dinner",
-    iron:1.3,
-    magnesium:29,
-    image:"https://images.unsplash.com/photo-1604503468506-a8da13d82791"
+id:"walnuts",
+name:"Walnuts",
+category:"Nuts & Seeds",
+image:"https://images.unsplash.com/photo-1558961363-fa8fdf82db35",
+serving:"30 g",
+calories:196,
+protein:4.6,
+carbs:4,
+fat:19.5,
+satFat:1.8,
+fiber:2,
+sugar:0.8,
+iron:0.9,
+calcium:29,
+potassium:132,
+magnesium:45,
+zinc:0.9,
+sodium:1,
+phosphorus:100,
+cholesterol:0,
+vitA:0,
+b1:0.1,
+b2:0.04,
+b6:0.15,
+b12:0,
+vitC:0,
+vitD:0,
+vitE:0.2,
+vitK:0.8,
+folate:29
 },
 
 {
-    name:"Fish",
-    meal:"Dinner",
-    iron:1.0,
-    magnesium:30,
-    image:"https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2"
+id:"chia",
+name:"Chia Seeds",
+category:"Nuts & Seeds",
+image:"https://images.unsplash.com/photo-1559181567-c3190ca9959b",
+serving:"2 tbsp",
+calories:138,
+protein:4.7,
+carbs:12,
+fat:8.7,
+satFat:0.9,
+fiber:9.8,
+sugar:0,
+iron:2.2,
+calcium:179,
+potassium:115,
+magnesium:95,
+zinc:1,
+sodium:4,
+phosphorus:244,
+cholesterol:0,
+vitA:0,
+b1:0.1,
+b2:0.05,
+b6:0.1,
+b12:0,
+vitC:0,
+vitD:0,
+vitE:0.5,
+vitK:0,
+folate:6
+},
+
+{
+id:"pumpkinSeeds",
+name:"Pumpkin Seeds",
+category:"Nuts & Seeds",
+image:"https://images.unsplash.com/photo-1603048297172-c92544798d5a",
+serving:"30 g",
+calories:170,
+protein:8.5,
+carbs:4,
+fat:14,
+satFat:2.5,
+fiber:1.7,
+sugar:0.4,
+iron:2.5,
+calcium:15,
+potassium:240,
+magnesium:160,
+zinc:2.2,
+sodium:5,
+phosphorus:350,
+cholesterol:0,
+vitA:0,
+b1:0.1,
+b2:0.05,
+b6:0.1,
+b12:0,
+vitC:0,
+vitD:0,
+vitE:0.5,
+vitK:2,
+folate:20
+},
+
+{
+id:"ragi",
+name:"Ragi",
+category:"Grains",
+image:"https://images.unsplash.com/photo-1596040033229-a9821ebd058d",
+serving:"100 g flour",
+calories:336,
+protein:7.3,
+carbs:72,
+fat:1.3,
+satFat:0.3,
+fiber:3.6,
+sugar:0,
+iron:3.9,
+calcium:344,
+potassium:408,
+magnesium:114,
+zinc:2.7,
+sodium:11,
+phosphorus:283,
+cholesterol:0,
+vitA:0,
+b1:0.4,
+b2:0.1,
+b6:0.4,
+b12:0,
+vitC:0,
+vitD:0,
+vitE:0.1,
+vitK:0,
+folate:35
+},
+
+{
+id:"oats",
+name:"Oats",
+category:"Grains",
+image:"https://images.unsplash.com/photo-1517673400267-0251440c45dc",
+serving:"1 cup cooked",
+calories:158,
+protein:6,
+carbs:27,
+fat:3.2,
+satFat:0.5,
+fiber:4,
+sugar:1,
+iron:1.7,
+calcium:21,
+potassium:164,
+magnesium:61,
+zinc:2.3,
+sodium:2,
+phosphorus:180,
+cholesterol:0,
+vitA:0,
+b1:0.2,
+b2:0.1,
+b6:0.1,
+b12:0,
+vitC:0,
+vitD:0,
+vitE:0.1,
+vitK:0,
+folate:14
+},
+
+{
+id:"bread",
+name:"Whole Wheat Bread",
+category:"Grains",
+image:"https://images.unsplash.com/photo-1509440159596-0249088772ff",
+serving:"2 slices",
+calories:140,
+protein:7,
+carbs:24,
+fat:2,
+satFat:0.4,
+fiber:4,
+sugar:3,
+iron:1.5,
+calcium:80,
+potassium:150,
+magnesium:45,
+zinc:1,
+sodium:240,
+phosphorus:120,
+cholesterol:0,
+vitA:0,
+b1:0.15,
+b2:0.1,
+b6:0.1,
+b12:0,
+vitC:0,
+vitD:0,
+vitE:0.5,
+vitK:2,
+folate:40
+},
+
+{
+id:"chapati",
+name:"Chapati",
+category:"Indian Food",
+image:"https://images.unsplash.com/photo-1601050690597-df0568f70950",
+serving:"1 chapati",
+calories:120,
+protein:3.5,
+carbs:18,
+fat:3,
+satFat:0.5,
+fiber:2.5,
+sugar:1,
+iron:1.4,
+calcium:15,
+potassium:90,
+magnesium:25,
+zinc:0.7,
+sodium:120,
+phosphorus:70,
+cholesterol:0,
+vitA:0,
+b1:0.1,
+b2:0.05,
+b6:0.1,
+b12:0,
+vitC:0,
+vitD:0,
+vitE:0.2,
+vitK:1,
+folate:20
+},
+
+{
+id:"idli",
+name:"Idli",
+category:"Indian Food",
+image:"https://images.unsplash.com/photo-1589301760014-d929f3979dbc",
+serving:"2 idlis",
+calories:120,
+protein:4,
+carbs:24,
+fat:0.5,
+satFat:0.1,
+fiber:1,
+sugar:1,
+iron:1.2,
+calcium:20,
+potassium:80,
+magnesium:20,
+zinc:0.5,
+sodium:180,
+phosphorus:70,
+cholesterol:0,
+vitA:0,
+b1:0.08,
+b2:0.05,
+b6:0.05,
+b12:0,
+vitC:0,
+vitD:0,
+vitE:0,
+vitK:0,
+folate:15
+},
+
+{
+id:"dosa",
+name:"Dosa",
+category:"Indian Food",
+image:"https://images.unsplash.com/photo-1668236543090-82eba5ee5976",
+serving:"1 dosa",
+calories:168,
+protein:4,
+carbs:30,
+fat:3.5,
+satFat:0.5,
+fiber:1,
+sugar:1,
+iron:1.5,
+calcium:25,
+potassium:100,
+magnesium:25,
+zinc:0.5,
+sodium:180,
+phosphorus:75,
+cholesterol:0,
+vitA:0,
+b1:0.1,
+b2:0.05,
+b6:0.05,
+b12:0,
+vitC:0,
+vitD:0,
+vitE:0,
+vitK:0,
+folate:18
+},
+
+{
+id:"poha",
+name:"Poha",
+category:"Indian Food",
+image:"https://images.unsplash.com/photo-1601050690597-df0568f70950",
+serving:"1 cup",
+calories:180,
+protein:4,
+carbs:32,
+fat:4,
+satFat:0.5,
+fiber:2,
+sugar:2,
+iron:2.5,
+calcium:20,
+potassium:150,
+magnesium:30,
+zinc:1,
+sodium:200,
+phosphorus:100,
+cholesterol:0,
+vitA:50,
+b1:0.1,
+b2:0.05,
+b6:0.1,
+b12:0,
+vitC:8,
+vitD:0,
+vitE:0.5,
+vitK:2,
+folate:30
+},
+
+{
+id:"upma",
+name:"Upma",
+category:"Indian Food",
+image:"https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7",
+serving:"1 cup",
+calories:200,
+protein:5,
+carbs:34,
+fat:5,
+satFat:0.7,
+fiber:3,
+sugar:2,
+iron:1.8,
+calcium:25,
+potassium:140,
+magnesium:35,
+zinc:1,
+sodium:250,
+phosphorus:90,
+cholesterol:0,
+vitA:20,
+b1:0.1,
+b2:0.05,
+b6:0.1,
+b12:0,
+vitC:5,
+vitD:0,
+vitE:0.5,
+vitK:2,
+folate:25
+},
+
+{
+id:"paneer",
+name:"Paneer",
+category:"Dairy",
+image:"https://images.unsplash.com/photo-1631452180519-c014fe946bc7",
+serving:"100 g",
+calories:265,
+protein:18,
+carbs:6,
+fat:20,
+satFat:13,
+fiber:0,
+sugar:2,
+iron:0.2,
+calcium:208,
+potassium:104,
+magnesium:8,
+zinc:2.3,
+sodium:22,
+phosphorus:138,
+cholesterol:56,
+vitA:210,
+b1:0.03,
+b2:0.15,
+b6:0.1,
+b12:0.8,
+vitC:0,
+vitD:0.1,
+vitE:0.2,
+vitK:2,
+folate:15
+},
+
+{
+id:"broccoli",
+name:"Broccoli",
+category:"Vegetables",
+image:"https://images.unsplash.com/photo-1459411621453-7b03977f4bfc",
+serving:"1 cup",
+calories:55,
+protein:3.7,
+carbs:11,
+fat:0.6,
+satFat:0.1,
+fiber:5,
+sugar:2,
+iron:1,
+calcium:62,
+potassium:505,
+magnesium:33,
+zinc:0.6,
+sodium:33,
+phosphorus:105,
+cholesterol:0,
+vitA:60,
+b1:0.1,
+b2:0.2,
+b6:0.3,
+b12:0,
+vitC:101,
+vitD:0,
+vitE:1.5,
+vitK:220,
+folate:168
+},
+
+{
+id:"sweetPotato",
+name:"Sweet Potato",
+category:"Vegetables",
+image:"https://images.unsplash.com/photo-1596097635121-14b63a7a7e0d",
+serving:"1 medium",
+calories:112,
+protein:2,
+carbs:26,
+fat:0.1,
+satFat:0,
+fiber:4,
+sugar:5,
+iron:0.8,
+calcium:40,
+potassium:438,
+magnesium:32,
+zinc:0.3,
+sodium:72,
+phosphorus:61,
+cholesterol:0,
+vitA:922,
+b1:0.1,
+b2:0.1,
+b6:0.3,
+b12:0,
+vitC:22,
+vitD:0,
+vitE:0.7,
+vitK:2,
+folate:6
+},
+
+{
+id:"mango",
+name:"Mango",
+category:"Fruits",
+image:"https://images.unsplash.com/photo-1553279768-865429fa0078",
+serving:"1 cup",
+calories:99,
+protein:1.4,
+carbs:25,
+fat:0.6,
+satFat:0.1,
+fiber:2.6,
+sugar:23,
+iron:0.2,
+calcium:18,
+potassium:277,
+magnesium:16,
+zinc:0.2,
+sodium:2,
+phosphorus:23,
+cholesterol:0,
+vitA:89,
+b1:0.1,
+b2:0.1,
+b6:0.1,
+b12:0,
+vitC:60,
+vitD:0,
+vitE:1.8,
+vitK:6,
+folate:71
+},
+
+{
+id:"papaya",
+name:"Papaya",
+category:"Fruits",
+image:"https://images.unsplash.com/photo-1526318472351-c75fcf070305",
+serving:"1 cup",
+calories:62,
+protein:0.7,
+carbs:16,
+fat:0.4,
+satFat:0.1,
+fiber:2.5,
+sugar:11,
+iron:0.2,
+calcium:33,
+potassium:286,
+magnesium:19,
+zinc:0.1,
+sodium:12,
+phosphorus:12,
+cholesterol:0,
+vitA:68,
+b1:0.05,
+b2:0.05,
+b6:0.1,
+b12:0,
+vitC:88,
+vitD:0,
+vitE:0.6,
+vitK:3,
+folate:53
+},
+
+{
+id:"pomegranate",
+name:"Pomegranate",
+category:"Fruits",
+image:"https://images.unsplash.com/photo-1541344999736-83eca272f6fc",
+serving:"1 cup",
+calories:144,
+protein:3,
+carbs:33,
+fat:2,
+satFat:0.2,
+fiber:7,
+sugar:24,
+iron:0.5,
+calcium:17,
+potassium:411,
+magnesium:17,
+zinc:0.6,
+sodium:5,
+phosphorus:51,
+cholesterol:0,
+vitA:0,
+b1:0.2,
+b2:0.1,
+b6:0.1,
+b12:0,
+vitC:18,
+vitD:0,
+vitE:1,
+vitK:25,
+folate:66
+},
+
+{
+id:"lentils",
+name:"Lentils",
+category:"Legumes",
+image:"https://images.unsplash.com/photo-1585937421612-70a008356fbe",
+serving:"1 cup cooked",
+calories:230,
+protein:18,
+carbs:40,
+fat:0.8,
+satFat:0.1,
+fiber:15,
+sugar:4,
+iron:6.6,
+calcium:37,
+potassium:731,
+magnesium:71,
+zinc:2.5,
+sodium:4,
+phosphorus:356,
+cholesterol:0,
+vitA:0,
+b1:0.3,
+b2:0.1,
+b6:0.4,
+b12:0,
+vitC:3,
+vitD:0,
+vitE:0.4,
+vitK:3,
+folate:358
+},
+
+{
+id:"soybeans",
+name:"Soybeans",
+category:"Legumes",
+image:"https://images.unsplash.com/photo-1612257416648-ee7a4c5b9f00",
+serving:"1 cup cooked",
+calories:296,
+protein:31,
+carbs:14,
+fat:15,
+satFat:2,
+fiber:10,
+sugar:5,
+iron:8.8,
+calcium:175,
+potassium:970,
+magnesium:148,
+zinc:4.9,
+sodium:1,
+phosphorus:421,
+cholesterol:0,
+vitA:1,
+b1:0.2,
+b2:0.5,
+b6:0.4,
+b12:0,
+vitC:3,
+vitD:0,
+vitE:0.4,
+vitK:33,
+folate:93
+},
+
+{
+id:"peas",
+name:"Green Peas",
+category:"Vegetables",
+image:"https://images.unsplash.com/photo-1587486913049-53fc88980cfc",
+serving:"1 cup",
+calories:117,
+protein:8,
+carbs:21,
+fat:0.6,
+satFat:0.1,
+fiber:7,
+sugar:8,
+iron:2.5,
+calcium:37,
+potassium:354,
+magnesium:62,
+zinc:1.9,
+sodium:7,
+phosphorus:187,
+cholesterol:0,
+vitA:48,
+b1:0.4,
+b2:0.2,
+b6:0.3,
+b12:0,
+vitC:22,
+vitD:0,
+vitE:0.4,
+vitK:42,
+folate:101
+},
+
+{
+id:"sesame",
+name:"Sesame Seeds",
+category:"Nuts & Seeds",
+image:"https://images.unsplash.com/photo-1596040033229-a9821ebd058d",
+serving:"30 g",
+calories:172,
+protein:5.2,
+carbs:6.3,
+fat:15,
+satFat:2.1,
+fiber:3.3,
+sugar:0.1,
+iron:4.4,
+calcium:294,
+potassium:116,
+magnesium:106,
+zinc:2.2,
+sodium:3,
+phosphorus:177,
+cholesterol:0,
+vitA:0,
+b1:0.25,
+b2:0.1,
+b6:0.1,
+b12:0,
+vitC:0,
+vitD:0,
+vitE:0.1,
+vitK:0,
+folate:34
+},
+
+{
+id:"tofu",
+name:"Tofu",
+category:"Protein",
+image:"https://images.unsplash.com/photo-1546069901-ba9599a7e63c",
+serving:"100 g",
+calories:94,
+protein:10,
+carbs:2,
+fat:5.5,
+satFat:0.8,
+fiber:1,
+sugar:0.6,
+iron:2.5,
+calcium:350,
+potassium:120,
+magnesium:30,
+zinc:1,
+sodium:7,
+phosphorus:97,
+cholesterol:0,
+vitA:0,
+b1:0.1,
+b2:0.1,
+b6:0.1,
+b12:0,
+vitC:0,
+vitD:0,
+vitE:0.1,
+vitK:2,
+folate:15
 }
 
 ];
 
 
-/* =========================
-   VARIABLES
-========================= */
+/* =========================================================
+   APP STATE
+========================================================= */
 
-let selectedDay = 1;
-let selectedMeal = "Breakfast";
+let currentDate = localDate();
+
+let selectedFood = null;
+
+let selectedJourneyDay = 1;
+
+let favorites =
+  JSON.parse(localStorage.getItem("nutriFavorites") || "[]");
+
+let recent =
+  JSON.parse(localStorage.getItem("nutriRecent") || "[]");
 
 let tracker =
-JSON.parse(localStorage.getItem("nutriTracker")) || {};
-
-let profile =
-JSON.parse(localStorage.getItem("nutriProfile")) || {};
+  JSON.parse(localStorage.getItem("nutriTracker") || "{}");
 
 
-/* =========================
-   CREATE DAY STORAGE
-========================= */
+/* =========================================================
+   DATE FUNCTIONS
+========================================================= */
 
-function createDays(){
+function localDate(){
 
-    for(let d=1; d<=14; d++){
+  const d = new Date();
 
-        if(!tracker[d]){
-            tracker[d]=[];
-        }
+  const year = d.getFullYear();
 
-    }
+  const month =
+    String(d.getMonth()+1).padStart(2,"0");
 
-    localStorage.setItem(
-        "nutriTracker",
-        JSON.stringify(tracker)
-    );
+  const day =
+    String(d.getDate()).padStart(2,"0");
+
+  return `${year}-${month}-${day}`;
 }
 
 
-/* =========================
-   PAGE NAVIGATION
-========================= */
+function getDateKey(date){
 
-function showPage(page){
+  return date;
 
-    document.querySelectorAll(".page")
-    .forEach(p => p.classList.remove("active"));
-
-    document.getElementById(page)
-    .classList.add("active");
-
-    if(page==="home"){
-        updateHome();
-    }
-
-    if(page==="meals"){
-        createMealDays();
-        showFoods();
-    }
-
-    if(page==="progress"){
-        showProgress();
-    }
-
-    if(page==="profile"){
-        loadProfile();
-    }
 }
 
 
-/* =========================
-   MEAL DAYS
-========================= */
+function getDayEntries(date){
 
-function createMealDays(){
+  return tracker[getDateKey(date)] || [];
 
-    const box =
-    document.getElementById("mealDays");
+}
+
+
+function saveTracker(){
+
+  localStorage.setItem(
+    "nutriTracker",
+    JSON.stringify(tracker)
+  );
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function go(page){
+
+  document
+  .querySelectorAll(".page")
+  .forEach(p=>p.classList.remove("active"));
+
+  const target =
+    document.getElementById(page);
+
+  if(target){
+    target.classList.add("active");
+  }
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+  if(page==="analyze"){
+    renderSearchResults();
+  }
+
+  if(page==="tracker"){
+    loadTracker();
+  }
+
+  if(page==="journey"){
+    renderJourney();
+  }
+
+  if(page==="database"){
+    renderDatabase();
+  }
+
+  if(page==="favorites"){
+    renderFavorites();
+  }
+
+  updateAll();
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+function homeSearch(){
+
+  const value =
+    document.getElementById("homeSearch")
+    .value
+    .toLowerCase()
+    .trim();
+
+  const box =
+    document.getElementById("homeSuggestions");
+
+  if(!value){
 
     box.innerHTML="";
+    return;
 
-    for(let d=1; d<=14; d++){
+  }
 
-        const button =
-        document.createElement("button");
-
-        button.innerText="Day "+d;
-
-        if(d===selectedDay){
-            button.classList.add("selected");
-        }
-
-        button.onclick=function(){
-
-            selectedDay=d;
-
-            createMealDays();
-            showFoods();
-
-        };
-
-        box.appendChild(button);
-    }
-}
-
-
-/* =========================
-   SELECT MEAL
-========================= */
-
-function selectMeal(meal){
-
-    selectedMeal=meal;
-
-    document
-    .querySelectorAll(".meal-buttons button")
-    .forEach(b => b.classList.remove("selected"));
-
-    document
-    .getElementById(
-        "meal"+meal
+  const results =
+    foods
+    .filter(f =>
+      f.name.toLowerCase().includes(value)
     )
-    .classList.add("selected");
+    .slice(0,5);
 
-    showFoods();
+  box.innerHTML =
+    results.map(f=>`
+
+      <div
+        class="card"
+        style="padding:12px;cursor:pointer"
+        onclick="selectFood('${f.id}')">
+
+        <b>${f.name}</b>
+        <span class="tag">${f.category}</span>
+
+      </div>
+
+    `).join("");
+
 }
 
 
-/* =========================
-   SHOW FOOD
-========================= */
+function renderSearchResults(){
 
-function showFoods(){
+  const input =
+    document.getElementById("foodSearch");
 
-    const grid =
-    document.getElementById("foodGrid");
+  if(!input) return;
 
-    const search =
-    document.getElementById("search")
-    .value
-    .toLowerCase();
+  const value =
+    input.value.toLowerCase().trim();
 
-    grid.innerHTML="";
+  const results =
+    value
+    ? foods.filter(f =>
+        f.name.toLowerCase().includes(value)
+      )
+    : foods.slice(0,9);
 
-    const filtered =
-    foods.filter(food =>
+  const box =
+    document.getElementById("searchResults");
 
-        food.meal === selectedMeal &&
+  box.innerHTML =
+    results.map(foodCard).join("");
 
-        food.name
-        .toLowerCase()
-        .includes(search)
+}
 
+
+/* =========================================================
+   FOOD CARD
+========================================================= */
+
+function foodCard(food){
+
+  return `
+
+    <div class="food-card">
+
+      <img
+        src="${food.image}"
+        alt="${food.name}"
+        onerror="this.src='https://images.unsplash.com/photo-1490645935967-10de6ba17061'"
+      >
+
+      <div class="food-info">
+
+        <span class="tag">${food.category}</span>
+
+        <h3>${food.name}</h3>
+
+        <p>
+          ${food.serving}<br>
+          ${food.calories} kcal · ${food.protein} g protein
+        </p>
+
+        <div class="food-actions">
+
+          <button
+            class="btn"
+            onclick="selectFood('${food.id}')">
+            Analyze
+          </button>
+
+          <button
+            class="btn secondary"
+            onclick="toggleFavorite('${food.id}')">
+            ⭐
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   SELECT FOOD
+========================================================= */
+
+function selectFood(id){
+
+  selectedFood =
+    foods.find(f=>f.id===id);
+
+  if(!selectedFood) return;
+
+  addRecent(id);
+
+  go("analyze");
+
+  renderSelectedFood();
+
+}
+
+
+function renderSelectedFood(){
+
+  if(!selectedFood) return;
+
+  const f = selectedFood;
+
+  const area =
+    document.getElementById("selectedFoodArea");
+
+  area.innerHTML = `
+
+    <div class="card">
+
+      <img
+        src="${f.image}"
+        alt="${f.name}"
+        style="
+          width:100%;
+          max-height:280px;
+          object-fit:cover;
+          border-radius:18px;
+        "
+      >
+
+      <h2>${f.name}</h2>
+
+      <p>
+        Standard serving:
+        <b>${f.serving}</b>
+      </p>
+
+      <label><b>Quantity</b></label>
+
+      <input
+        id="quantity"
+        type="number"
+        min="0.25"
+        step="0.25"
+        value="1"
+        style="
+          width:100%;
+          padding:13px;
+          margin:8px 0;
+          border:1px solid var(--border);
+          border-radius:10px;
+        "
+        oninput="updateSelectedNutrition()"
+      >
+
+      <div id="selectedNutrition"></div>
+
+    </div>
+
+    <div class="card">
+
+      <h2>💚 How This Food Supports Your Body</h2>
+
+      <div class="benefit">
+        <b>Protein:</b>
+        Supports muscles and body tissues.
+      </div>
+
+      <div class="benefit">
+        <b>Iron:</b>
+        Contributes to normal hemoglobin and
+        red blood cell formation.
+      </div>
+
+      <div class="benefit">
+        <b>Calcium:</b>
+        Supports normal bones and teeth.
+      </div>
+
+      <div class="benefit">
+        <b>Vitamins:</b>
+        Help support normal body functions.
+      </div>
+
+      <div class="benefit">
+        <b>Fiber:</b>
+        Supports normal digestive function.
+      </div>
+
+    </div>
+
+    <div class="card">
+
+      <h2>🩸 Hemoglobin & Blood Support</h2>
+
+      <p>
+        This food provides nutrients that can contribute
+        to normal blood and red blood cell formation.
+      </p>
+
+      <div id="bloodClassification"></div>
+
+      <br>
+
+      <p>
+        Hemoglobin levels depend on nutritional status,
+        absorption, individual needs and health conditions.
+        This app does not predict hemoglobin levels or
+        promise a specific increase.
+      </p>
+
+    </div>
+
+    <button
+      class="btn"
+      style="width:100%;font-size:16px;padding:15px"
+      onclick="addSelectedFood()">
+
+      + Add to Daily Intake
+
+    </button>
+
+  `;
+
+  updateSelectedNutrition();
+
+}
+
+
+/* =========================================================
+   NUTRITION CALCULATION
+========================================================= */
+
+const nutrients = [
+
+  ["calories","Calories","kcal"],
+  ["protein","Protein","g"],
+  ["carbs","Carbohydrates","g"],
+  ["fat","Total Fat","g"],
+  ["satFat","Saturated Fat","g"],
+  ["fiber","Fiber","g"],
+  ["sugar","Sugar","g"],
+
+  ["iron","Iron","mg"],
+  ["calcium","Calcium","mg"],
+  ["potassium","Potassium","mg"],
+  ["magnesium","Magnesium","mg"],
+  ["zinc","Zinc","mg"],
+  ["sodium","Sodium","mg"],
+  ["phosphorus","Phosphorus","mg"],
+  ["cholesterol","Cholesterol","mg"],
+
+  ["vitA","Vitamin A","µg"],
+  ["b1","Vitamin B1","mg"],
+  ["b2","Vitamin B2","mg"],
+  ["b6","Vitamin B6","mg"],
+  ["b12","Vitamin B12","µg"],
+  ["vitC","Vitamin C","mg"],
+  ["vitD","Vitamin D","µg"],
+  ["vitE","Vitamin E","mg"],
+  ["vitK","Vitamin K","µg"],
+  ["folate","Folate","µg"]
+
+];
+
+
+function calculateFood(food, quantity){
+
+  const result={};
+
+  nutrients.forEach(([key])=>{
+
+    result[key] =
+      Number(food[key] || 0) *
+      Number(quantity || 1);
+
+  });
+
+  return result;
+
+}
+
+
+function updateSelectedNutrition(){
+
+  if(!selectedFood) return;
+
+  const quantity =
+    Number(
+      document.getElementById("quantity")?.value || 1
     );
 
-    if(filtered.length===0){
+  const n =
+    calculateFood(
+      selectedFood,
+      quantity
+    );
 
-        grid.innerHTML=
-        `<div class="empty">
-            No food found.
-        </div>`;
+  const box =
+    document.getElementById("selectedNutrition");
 
-        return;
+  box.innerHTML = `
+
+    <h3 class="section-title">
+      Nutrition for ${quantity} serving(s)
+    </h3>
+
+    <div class="grid4">
+
+      <div class="stat">
+        🔥<br>
+        Calories
+        <div class="number">${n.calories.toFixed(1)} kcal</div>
+      </div>
+
+      <div class="stat">
+        💪<br>
+        Protein
+        <div class="number">${n.protein.toFixed(1)} g</div>
+      </div>
+
+      <div class="stat">
+        🩸<br>
+        Iron
+        <div class="number">${n.iron.toFixed(2)} mg</div>
+      </div>
+
+      <div class="stat">
+        🍊<br>
+        Vitamin C
+        <div class="number">${n.vitC.toFixed(1)} mg</div>
+      </div>
+
+    </div>
+
+    <br>
+
+    <table class="nutrition-table">
+
+      ${nutrients.map(([key,name,unit])=>`
+
+        <tr>
+          <td>${name}</td>
+          <td>${n[key].toFixed(2)} ${unit}</td>
+        </tr>
+
+      `).join("")}
+
+    </table>
+
+  `;
+
+  renderBloodClassification(n.iron);
+
+}
+
+
+function renderBloodClassification(iron){
+
+  const box =
+    document.getElementById(
+      "bloodClassification"
+    );
+
+  if(!box) return;
+
+  let text;
+  let cls;
+
+  if(iron >= 3){
+
+    text="🟢 Good source";
+    cls="good";
+
+  }else if(iron >= 1){
+
+    text="🟡 Moderate source";
+    cls="moderate";
+
+  }else{
+
+    text="⚪ Low source";
+    cls="low";
+
+  }
+
+  box.innerHTML =
+    `<span class="source-badge ${cls}">
+      ${text}
+    </span>`;
+
+}
+
+
+/* =========================================================
+   ADD TO DAILY INTAKE
+========================================================= */
+
+function addSelectedFood(){
+
+  if(!selectedFood) return;
+
+  const quantity =
+    Number(
+      document.getElementById("quantity").value || 1
+    );
+
+  const n =
+    calculateFood(
+      selectedFood,
+      quantity
+    );
+
+  if(!tracker[currentDate]){
+    tracker[currentDate]=[];
+  }
+
+  tracker[currentDate].push({
+
+    id:selectedFood.id,
+    name:selectedFood.name,
+    quantity:quantity,
+    serving:selectedFood.serving,
+
+    date:currentDate,
+
+    time:new Date().toLocaleTimeString(
+      [],
+      {
+        hour:"2-digit",
+        minute:"2-digit"
+      }
+    ),
+
+    nutrition:n
+
+  });
+
+  saveTracker();
+
+  alert(
+    selectedFood.name+
+    " added to today's intake!"
+  );
+
+  updateAll();
+
+  go("tracker");
+
+}
+
+
+/* =========================================================
+   DAILY TRACKER
+========================================================= */
+
+function loadTracker(){
+
+  const input =
+    document.getElementById("trackerDate");
+
+  if(input){
+    input.value=currentDate;
+  }
+
+  renderDailyTracker();
+
+}
+
+
+function changeDate(value){
+
+  currentDate=value;
+
+  renderDailyTracker();
+
+  updateAll();
+
+}
+
+
+function sumEntries(entries){
+
+  const total={};
+
+  nutrients.forEach(([key])=>{
+    total[key]=0;
+  });
+
+  entries.forEach(entry=>{
+
+    nutrients.forEach(([key])=>{
+
+      total[key] +=
+        Number(
+          entry.nutrition?.[key] || 0
+        );
+
+    });
+
+  });
+
+  return total;
+
+}
+
+
+function renderDailyTracker(){
+
+  const entries =
+    getDayEntries(currentDate);
+
+  const total =
+    sumEntries(entries);
+
+  document.getElementById(
+    "dailyCalories"
+  ).innerText =
+    total.calories.toFixed(0);
+
+  document.getElementById(
+    "dailyProtein"
+  ).innerText =
+    total.protein.toFixed(1)+" g";
+
+  document.getElementById(
+    "dailyIron"
+  ).innerText =
+    total.iron.toFixed(2)+" mg";
+
+  document.getElementById(
+    "dailyCalcium"
+  ).innerText =
+    total.calcium.toFixed(1)+" mg";
+
+
+  const foodBox =
+    document.getElementById("dailyFoods");
+
+  if(!entries.length){
+
+    foodBox.innerHTML=
+      `<div class="empty">
+        No foods added for this date.
+      </div>`;
+
+  }else{
+
+    foodBox.innerHTML =
+      entries.map((entry,index)=>`
+
+        <div class="meal-row">
+
+          <div>
+
+            <b>${entry.name}</b>
+
+            <br>
+
+            <small>
+              ${entry.quantity} ×
+              ${entry.serving}
+              · ${entry.time}
+            </small>
+
+          </div>
+
+          <div>
+
+            <button
+              class="btn secondary"
+              onclick="editEntry(${index})">
+              Edit
+            </button>
+
+            <button
+              class="btn danger"
+              onclick="deleteEntry(${index})">
+              Delete
+            </button>
+
+          </div>
+
+        </div>
+
+      `).join("");
+
+  }
+
+
+  const detailBox =
+    document.getElementById(
+      "dailyNutrition"
+    );
+
+  detailBox.innerHTML =
+    `<table class="nutrition-table">
+      ${
+        nutrients.map(([key,name,unit])=>`
+
+          <tr>
+            <td>${name}</td>
+            <td>
+              ${total[key].toFixed(2)} ${unit}
+            </td>
+          </tr>
+
+        `).join("")
+      }
+    </table>`;
+
+}
+
+
+/* =========================================================
+   EDIT / DELETE
+========================================================= */
+
+function deleteEntry(index){
+
+  if(!confirm("Delete this food entry?")){
+    return;
+  }
+
+  tracker[currentDate].splice(
+    index,
+    1
+  );
+
+  saveTracker();
+
+  renderDailyTracker();
+
+  updateAll();
+
+}
+
+
+function editEntry(index){
+
+  const entry =
+    tracker[currentDate][index];
+
+  const newQuantity =
+    Number(
+      prompt(
+        "Enter new quantity:",
+        entry.quantity
+      )
+    );
+
+  if(!newQuantity || newQuantity<=0){
+    return;
+  }
+
+  const food =
+    foods.find(
+      f=>f.id===entry.id
+    );
+
+  if(!food) return;
+
+  entry.quantity=newQuantity;
+
+  entry.nutrition =
+    calculateFood(
+      food,
+      newQuantity
+    );
+
+  saveTracker();
+
+  renderDailyTracker();
+
+  updateAll();
+
+}
+
+
+/* =========================================================
+   14-DAY DATA
+========================================================= */
+
+function get14DayDates(){
+
+  const dates=[];
+
+  const start =
+    new Date();
+
+  start.setHours(0,0,0,0);
+
+  for(let i=13;i>=0;i--){
+
+    const d =
+      new Date(start);
+
+    d.setDate(
+      start.getDate()-i
+    );
+
+    dates.push(
+      localDateFromDate(d)
+    );
+
+  }
+
+  return dates;
+
+}
+
+
+function localDateFromDate(d){
+
+  const y=d.getFullYear();
+
+  const m=
+    String(d.getMonth()+1)
+    .padStart(2,"0");
+
+  const day=
+    String(d.getDate())
+    .padStart(2,"0");
+
+  return `${y}-${m}-${day}`;
+
+}
+
+
+function get14DayTotals(){
+
+  const dates =
+    get14DayDates();
+
+  const total={};
+
+  nutrients.forEach(([key])=>{
+    total[key]=0;
+  });
+
+  let trackedDays=0;
+
+  dates.forEach(date=>{
+
+    const entries =
+      getDayEntries(date);
+
+    if(entries.length){
+      trackedDays++;
     }
 
+    const dayTotal =
+      sumEntries(entries);
 
-    filtered.forEach(food => {
+    nutrients.forEach(([key])=>{
 
-        /* FIX:
-           Get the original food index
-           instead of filtered index.
-        */
+      total[key] +=
+        dayTotal[key];
 
-        const originalIndex =
-        foods.indexOf(food);
+    });
 
-        const div =
-        document.createElement("div");
+  });
 
-        div.className="food";
+  return {
+    total,
+    trackedDays,
+    dates
+  };
 
-        div.innerHTML=`
+}
 
-            <img
-            src="${food.image}"
-            alt="${food.name}"
-            onerror="this.style.display='none'"
-            >
 
-            <div class="food-content">
+/* =========================================================
+   JOURNEY
+========================================================= */
 
-                <h3>${food.name}</h3>
+function renderJourney(){
 
-                <p>
-                    🩸 Iron:
-                    ${food.iron} mg
-                </p>
+  const data =
+    get14DayTotals();
 
-                <p>
-                    ⚡ Magnesium:
-                    ${food.magnesium} mg
-                </p>
+  const tabs =
+    document.getElementById(
+      "dayTabs"
+    );
 
-                <button
-                onclick="addFood(${originalIndex})">
-                    + Add
-                </button>
+  tabs.innerHTML =
+    data.dates.map(
+      (date,index)=>`
 
+        <button
+          class="${
+            index+1===selectedJourneyDay
+            ? "active"
+            : ""
+          }"
+          onclick="selectJourneyDay(${index+1})">
+
+          Day ${index+1}
+
+        </button>
+
+      `
+    ).join("");
+
+  renderJourneyDay();
+
+  renderSummary();
+
+  renderChart();
+
+  renderBloodSupport14();
+
+}
+
+
+function selectJourneyDay(day){
+
+  selectedJourneyDay=day;
+
+  renderJourney();
+
+}
+
+
+function renderJourneyDay(){
+
+  const data =
+    get14DayTotals();
+
+  const date =
+    data.dates[
+      selectedJourneyDay-1
+    ];
+
+  document.getElementById(
+    "journeyDayTitle"
+  ).innerText =
+    "Day "+selectedJourneyDay+
+    " — "+
+    date;
+
+  const entries =
+    getDayEntries(date);
+
+  const box =
+    document.getElementById(
+      "journeyFoods"
+    );
+
+  if(!entries.length){
+
+    box.innerHTML=
+      `<div class="empty">
+        No foods recorded on Day
+        ${selectedJourneyDay}.
+      </div>`;
+
+    return;
+
+  }
+
+  const total =
+    sumEntries(entries);
+
+  box.innerHTML = `
+
+    <div class="grid4">
+
+      <div class="stat">
+        🔥
+        <b>Calories</b>
+        <div class="number">
+          ${total.calories.toFixed(0)}
+        </div>
+      </div>
+
+      <div class="stat">
+        💪
+        <b>Protein</b>
+        <div class="number">
+          ${total.protein.toFixed(1)} g
+        </div>
+      </div>
+
+      <div class="stat">
+        🩸
+        <b>Iron</b>
+        <div class="number">
+          ${total.iron.toFixed(2)} mg
+        </div>
+      </div>
+
+      <div class="stat">
+        🍊
+        <b>Vitamin C</b>
+        <div class="number">
+          ${total.vitC.toFixed(1)} mg
+        </div>
+      </div>
+
+    </div>
+
+    <br>
+
+    ${
+      entries.map(entry=>`
+
+        <div class="meal-row">
+
+          <div>
+            <b>${entry.name}</b>
+            <br>
+            <small>
+              Quantity: ${entry.quantity}
+            </small>
+          </div>
+
+          <div>
+            ${entry.nutrition.calories.toFixed(0)} kcal
+          </div>
+
+        </div>
+
+      `).join("")
+    }
+
+  `;
+
+}
+
+
+/* =========================================================
+   14-DAY SUMMARY
+========================================================= */
+
+function renderSummary(){
+
+  const data =
+    get14DayTotals();
+
+  document.getElementById(
+    "totalCalories"
+  ).innerText =
+    data.total.calories.toFixed(0);
+
+  document.getElementById(
+    "totalProtein"
+  ).innerText =
+    data.total.protein.toFixed(1)+" g";
+
+  document.getElementById(
+    "totalIron"
+  ).innerText =
+    data.total.iron.toFixed(2)+" mg";
+
+  document.getElementById(
+    "totalVitaminC"
+  ).innerText =
+    data.total.vitC.toFixed(1)+" mg";
+
+
+  const tracked =
+    data.trackedDays || 1;
+
+  const important = [
+
+    ["calories","Calories","kcal"],
+    ["protein","Protein","g"],
+    ["carbs","Carbohydrates","g"],
+    ["fat","Fat","g"],
+    ["fiber","Fiber","g"],
+    ["iron","Iron","mg"],
+    ["calcium","Calcium","mg"],
+    ["folate","Folate","µg"],
+    ["b12","Vitamin B12","µg"],
+    ["vitC","Vitamin C","mg"]
+
+  ];
+
+  document.getElementById(
+    "summaryTable"
+  ).innerHTML =
+
+    important.map(
+      ([key,name,unit])=>`
+
+        <tr>
+
+          <td>${name}</td>
+
+          <td>
+            ${data.total[key].toFixed(2)}
+            ${unit}
+          </td>
+
+          <td>
+            ${
+              (
+                data.total[key]/tracked
+              ).toFixed(2)
+            }
+            ${unit}
+          </td>
+
+        </tr>
+
+      `
+    ).join("");
+
+}
+
+
+/* =========================================================
+   CHART
+========================================================= */
+
+function renderChart(){
+
+  const select =
+    document.getElementById(
+      "chartSelect"
+    );
+
+  if(!select) return;
+
+  const key=select.value;
+
+  const data =
+    get14DayTotals();
+
+  const values =
+    data.dates.map(
+      date=>
+        sumEntries(
+          getDayEntries(date)
+        )[key]
+    );
+
+  const max =
+    Math.max(...values,1);
+
+  const chart =
+    document.getElementById("chart");
+
+  chart.innerHTML =
+    values.map(
+      (value,index)=>{
+
+        const height =
+          (value/max)*170;
+
+        return `
+
+          <div class="bar-wrap">
+
+            <div
+              class="bar"
+              style="height:${height}px"
+              title="${value.toFixed(2)}"
+            ></div>
+
+            <div class="bar-label">
+              D${index+1}
             </div>
+
+          </div>
 
         `;
 
-        grid.appendChild(div);
-
-    });
+      }
+    ).join("");
 
 }
 
 
-/* =========================
-   ADD FOOD
-========================= */
+/* =========================================================
+   BLOOD SUPPORT
+========================================================= */
 
-function addFood(index){
+function renderBloodSupport14(){
 
-    const food=foods[index];
+  const data =
+    get14DayTotals();
 
-    tracker[selectedDay].push({
+  const keys=[
 
-        name:food.name,
-        meal:selectedMeal,
-        iron:food.iron,
-        magnesium:food.magnesium
+    ["iron","Iron","mg"],
+    ["folate","Folate","µg"],
+    ["b12","Vitamin B12","µg"],
+    ["vitC","Vitamin C","mg"],
+    ["b6","Vitamin B6","mg"],
+    ["protein","Protein","g"]
 
-    });
+  ];
 
-    saveData();
+  document.getElementById(
+    "bloodSupport14"
+  ).innerHTML =
 
-    alert(
-        food.name+
-        " added to Day "+
-        selectedDay+
-        " - "+
-        selectedMeal
+    `<table class="nutrition-table">
+
+      ${keys.map(
+        ([key,name,unit])=>`
+
+          <tr>
+
+            <td>${name}</td>
+
+            <td>
+              ${data.total[key].toFixed(2)}
+              ${unit}
+            </td>
+
+            <td>
+              Average:
+              ${
+                (
+                  data.total[key]/
+                  Math.max(data.trackedDays,1)
+                ).toFixed(2)
+              }
+              ${unit}
+            </td>
+
+          </tr>
+
+        `
+      ).join("")}
+
+    </table>
+
+    <br>
+
+    <div class="disclaimer">
+
+      These nutrients contribute to normal blood and
+      red blood cell functions. Nutrition alone cannot
+      determine an individual's hemoglobin level.
+
+    </div>`;
+
+}
+
+
+/* =========================================================
+   DATABASE
+========================================================= */
+
+function renderDatabase(){
+
+  const input =
+    document.getElementById(
+      "databaseSearch"
     );
 
-    updateHome();
-    showProgress();
+  const value =
+    input?.value
+    .toLowerCase()
+    .trim() || "";
+
+  const list =
+    value
+    ? foods.filter(
+        f=>f.name.toLowerCase().includes(value)
+      )
+    : foods;
+
+  document.getElementById(
+    "databaseGrid"
+  ).innerHTML =
+    list.map(foodCard).join("");
 
 }
 
 
-/* =========================
-   SAVE TRACKER
-========================= */
+/* =========================================================
+   FAVORITES
+========================================================= */
 
-function saveData(){
+function toggleFavorite(id){
 
-    localStorage.setItem(
-        "nutriTracker",
-        JSON.stringify(tracker)
+  if(favorites.includes(id)){
+
+    favorites =
+      favorites.filter(
+        x=>x!==id
+      );
+
+  }else{
+
+    favorites.push(id);
+
+  }
+
+  localStorage.setItem(
+    "nutriFavorites",
+    JSON.stringify(favorites)
+  );
+
+  renderFavorites();
+
+}
+
+
+function renderFavorites(){
+
+  const box =
+    document.getElementById(
+      "favoriteGrid"
     );
 
-}
+  if(!favorites.length){
 
+    box.innerHTML=
+      `<div class="empty">
+        No favorite foods yet.
+      </div>`;
 
-/* =========================
-   DAY TOTAL
-========================= */
+    return;
 
-function getDayTotal(day){
+  }
 
-    let iron=0;
-    let magnesium=0;
-
-    if(!tracker[day]){
-        return {
-            iron:0,
-            magnesium:0
-        };
-    }
-
-    tracker[day].forEach(food => {
-
-        iron += Number(food.iron);
-        magnesium += Number(food.magnesium);
-
-    });
-
-    return {
-        iron:iron,
-        magnesium:magnesium
-    };
+  box.innerHTML =
+    favorites
+    .map(
+      id=>foods.find(f=>f.id===id)
+    )
+    .filter(Boolean)
+    .map(foodCard)
+    .join("");
 
 }
 
 
-/* =========================
-   14-DAY TOTAL
-========================= */
+/* =========================================================
+   RECENT FOODS
+========================================================= */
 
-function get14DayTotal(){
+function addRecent(id){
 
-    let totalIron=0;
-    let totalMagnesium=0;
+  recent =
+    [
+      id,
+      ...recent.filter(x=>x!==id)
+    ].slice(0,10);
 
-    for(let d=1; d<=14; d++){
-
-        const dayTotal =
-        getDayTotal(d);
-
-        totalIron += dayTotal.iron;
-        totalMagnesium +=
-        dayTotal.magnesium;
-
-    }
-
-    return {
-
-        iron:totalIron,
-        magnesium:totalMagnesium
-
-    };
+  localStorage.setItem(
+    "nutriRecent",
+    JSON.stringify(recent)
+  );
 
 }
 
 
-/* =========================
-   HOME
-========================= */
+/* =========================================================
+   PHOTO UPLOAD
+========================================================= */
+
+function identifyPhoto(event){
+
+  const file =
+    event.target.files[0];
+
+  if(!file) return;
+
+  const preview =
+    document.getElementById(
+      "photoPreview"
+    );
+
+  const result =
+    document.getElementById(
+      "photoResult"
+    );
+
+  preview.src =
+    URL.createObjectURL(file);
+
+  preview.style.display="block";
+
+  /*
+    Prototype mock AI identification.
+
+    A real computer-vision API can later replace
+    this section and return a food ID.
+  */
+
+  const randomFood =
+    foods[
+      Math.floor(
+        Math.random()*foods.length
+      )
+    ];
+
+  result.innerHTML = `
+
+    <b>🤖 Prototype AI result:</b><br>
+
+    Possible food:
+    <strong>${randomFood.name}</strong>
+
+    <br><br>
+
+    <button
+      class="btn"
+      onclick="selectFood('${randomFood.id}')">
+
+      Analyze ${randomFood.name}
+
+    </button>
+
+    <br><br>
+
+    <small>
+      This is a prototype mock identification.
+      A real AI vision API can be connected later.
+    </small>
+
+  `;
+
+}
+
+
+/* =========================================================
+   HOME UPDATE
+========================================================= */
 
 function updateHome(){
 
-    const today =
-    getDayTotal(selectedDay);
+  const entries =
+    getDayEntries(currentDate);
 
-    document.getElementById(
-        "dayText"
-    ).innerText=
-    "Day "+selectedDay+" of 14";
+  const total =
+    sumEntries(entries);
 
-    document.getElementById(
-        "homeIron"
-    ).innerText=
-    today.iron.toFixed(1)+" mg";
+  document.getElementById(
+    "homeCalories"
+  ).innerText =
+    total.calories.toFixed(0);
 
-    document.getElementById(
-        "homeMag"
-    ).innerText=
-    today.magnesium.toFixed(1)+" mg";
+  document.getElementById(
+    "homeProtein"
+  ).innerText =
+    total.protein.toFixed(1)+" g";
 
-    document.getElementById(
-        "mealCount"
-    ).innerText=
-    tracker[selectedDay].length+
-    " foods added today";
+  document.getElementById(
+    "homeIron"
+  ).innerText =
+    total.iron.toFixed(2)+" mg";
 
-    const now=new Date();
+  document.getElementById(
+    "homeVitaminC"
+  ).innerText =
+    total.vitC.toFixed(1)+" mg";
 
-    document.getElementById(
-        "dateText"
-    ).innerText=
-    now.toLocaleDateString(
-        "en-IN",
-        {
-            day:"numeric",
-            month:"long",
-            year:"numeric"
-        }
-    );
+  document.getElementById(
+    "homeTodayText"
+  ).innerText =
+    entries.length
+    ? entries.length+
+      " food item(s) recorded today."
+    : "No foods added today.";
 
-    if(profile.name){
+  const data =
+    get14DayTotals();
 
-        document.getElementById(
-            "welcomeText"
-        ).innerText=
-        "Welcome, "+profile.name+"!";
+  document.getElementById(
+    "homeDays"
+  ).innerText =
+    data.trackedDays+" / 14";
 
-    }
+  document.getElementById(
+    "home14Iron"
+  ).innerText =
+    data.total.iron.toFixed(1)+" mg";
 
-}
-
-
-/* =========================
-   PROGRESS PAGE
-========================= */
-
-function showProgress(){
-
-    const total =
-    get14DayTotal();
-
-
-    /* 14-DAY TOTAL */
-
-    document.getElementById(
-        "totalIron"
-    ).innerText=
-    total.iron.toFixed(1)+" mg";
-
-    document.getElementById(
-        "totalMag"
-    ).innerText=
-    total.magnesium.toFixed(1)+" mg";
-
-
-    /* AVERAGE */
-
-    document.getElementById(
-        "averageIron"
-    ).innerText=
-    (total.iron/14).toFixed(1)+" mg";
-
-    document.getElementById(
-        "averageMag"
-    ).innerText=
-    (total.magnesium/14).toFixed(1)+" mg";
-
-
-    /* DAY-BY-DAY */
-
-    const breakdown =
-    document.getElementById(
-        "dailyBreakdown"
-    );
-
-    breakdown.innerHTML="";
-
-
-    for(let d=1; d<=14; d++){
-
-        const dayTotal =
-        getDayTotal(d);
-
-        const div =
-        document.createElement("div");
-
-        div.className="progress-day";
-
-        div.innerHTML=`
-
-            <strong>
-                Day ${d}
-            </strong>
-
-            <span>
-                🩸 ${dayTotal.iron.toFixed(1)} mg
-                &nbsp; | &nbsp;
-                ⚡ ${dayTotal.magnesium.toFixed(1)} mg
-            </span>
-
-        `;
-
-        breakdown.appendChild(div);
-
-    }
+  document.getElementById(
+    "home14Protein"
+  ).innerText =
+    data.total.protein.toFixed(1)+" g";
 
 }
 
 
-/* =========================
-   PROFILE
-========================= */
+/* =========================================================
+   UPDATE EVERYTHING
+========================================================= */
 
-function saveProfile(){
+function updateAll(){
 
-    profile={
+  updateHome();
 
-        name:
-        document
-        .getElementById("profileName")
-        .value,
+  const active =
+    document.querySelector(
+      ".page.active"
+    )?.id;
 
-        age:
-        document
-        .getElementById("profileAge")
-        .value,
+  if(active==="tracker"){
+    renderDailyTracker();
+  }
 
-        food:
-        document
-        .getElementById("profileFood")
-        .value
+  if(active==="journey"){
+    renderJourney();
+  }
 
-    };
+}
 
-    localStorage.setItem(
-        "nutriProfile",
-        JSON.stringify(profile)
-    );
 
-    document.getElementById(
-        "profileSaved"
-    ).innerText=
-    "Profile saved successfully ✓";
+/* =========================================================
+   MODAL
+========================================================= */
+
+function closeModal(){
+
+  document
+    .getElementById("foodModal")
+    .classList.remove("show");
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  ()=>{
+
+    renderSearchResults();
+
+    renderDatabase();
+
+    renderFavorites();
 
     updateHome();
 
-}
-
-
-/* =========================
-   LOAD PROFILE
-========================= */
-
-function loadProfile(){
-
-    document.getElementById(
-        "profileName"
-    ).value=profile.name || "";
-
-    document.getElementById(
-        "profileAge"
-    ).value=profile.age || "";
-
-    document.getElementById(
-        "profileFood"
-    ).value=
-    profile.food ||
-    "Vegetarian";
-
-}
-
-
-/* =========================
-   START APP
-========================= */
-
-createDays();
-
-loadProfile();
-
-updateHome();
+  }
+);
 
 </script>
 
